@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         totalSharesNow.setText(totalShares);
         totalAmountNow.setText(totalAmount);
         totalAverageNow.setText(totalAverage);
-        
+
 
 /*
         String share = totalShares.getText().toString();
