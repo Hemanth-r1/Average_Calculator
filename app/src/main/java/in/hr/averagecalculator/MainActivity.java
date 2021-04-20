@@ -9,8 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     EditText currentHoldingShares, currentHoldingAverage, currentHoldingAmount,
-            newShares, newAverage, newAmount;
+            newHoldingShares, newHoldingAverage, newHoldingAmount;
     TextView totalSharesNow, totalAverageNow, totalAmountNow;
+
+    int holdingAverage, holdingShares, holdingAmount;
+    int newSh, marketPrice, price;
+    int totalSh, totalAv, totalAm;
+    int oldHold, newHold, newAvg, oldAvg, newTot, oldTot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,86 +26,61 @@ public class MainActivity extends AppCompatActivity {
         currentHoldingAverage = findViewById(R.id.holding_shares_average);
         currentHoldingAmount = findViewById(R.id.holding_shares_average_price);
 
-        newShares = findViewById(R.id.new_shares);
-        newAverage = findViewById(R.id.new_shares_price);
-        newAmount = findViewById(R.id.new_shares_amount);
+        newHoldingShares = findViewById(R.id.new_shares);
+        newHoldingAverage = findViewById(R.id.new_shares_price);
+        newHoldingAmount = findViewById(R.id.new_shares_amount);
 
         totalAmountNow = findViewById(R.id.total_amount);
         totalAverageNow = findViewById(R.id.total_average_price);
         totalSharesNow = findViewById(R.id.total_shares);
 
-
     }
 
-    public void calculateTotal() {
-        int totalSh, totalAv, totalAm;
-        int oldHold, newHold, newAvg,  oldAvg,newTot, oldTot;
+    public void calculateHolding(View view) {
 
-        String holding = currentHoldingShares.getText().toString();
-        oldHold = Integer.parseInt(holding);
+        holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
+        holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
+        holdingAmount = holdingAverage * holdingShares;
+        String holdingValue = String.valueOf(holdingAmount);
+        currentHoldingAmount.setText(holdingValue);
 
-        String newShare = newShares.getText().toString();
-        newHold = Integer.parseInt(newShare);
+        newSh = Integer.parseInt(newHoldingShares.getText().toString());
+        marketPrice = Integer.parseInt(newHoldingAverage.getText().toString());
+        newTot = marketPrice * newSh;
+        String newValue = String.valueOf(newTot);
+        newHoldingAmount.setText(newValue);
 
-        String avg = currentHoldingAverage.getText().toString();
-        oldAvg = Integer.parseInt(avg);
+        oldHold = holdingShares;
+        newHold = newSh;
+        oldAvg = holdingAverage;
+        newAvg = marketPrice;
 
-        String NewAverage = newAverage.getText().toString();
-        newAvg = Integer.parseInt(NewAverage);
-
-        oldTot = oldAvg* oldHold;
-        newTot = newAvg * newHold;
-
-        totalSh = newHold + oldHold;
-        totalAv = newAvg + oldAvg;
-        totalAm = oldTot + newTot;
+        totalSh = oldHold + newHold;
+        totalAv = oldAvg + newAvg;
+        totalAm = holdingAmount + newTot;
 
         String totalShares = String.valueOf(totalSh);
-        String totalAverage = String.valueOf(totalAv);
+        String totalAvg = String.valueOf(totalAv);
         String totalAmount = String.valueOf(totalAm);
 
         totalSharesNow.setText(totalShares);
+        totalAverageNow.setText(totalAvg);
         totalAmountNow.setText(totalAmount);
-        totalAverageNow.setText(totalAverage);
 
-
+        //calculateTotal();
+        // calculateHolding(currentHoldingShares, currentHoldingAverage);
+        // calculateNew(newShares, newAverage);
+    }
+}
 /*
-        String share = totalShares.getText().toString();
-        totalSh = Integer.parseInt(share);
+    public void calculateTotal() {
 
-        String average = totalAverage.getText().toString();
-        totalAv = Integer.parseInt(average);
+        //calculate holding
 
- */
+        String holdAvg = currentHoldingAverage.getText().toString();
+        //holdingAverage = Integer.getInteger(average); this is not working showing null pointer excp
+        holdingAverage = Integer.parseInt(holdAvg);
 
-    }
-
-    public int calculateNew(EditText newShares, EditText newAverage) {
-        int newShare, marketPrice,  price;
-
-        String share = newShares.getText().toString();
-        // newShare = Integer.getInteger(share);
-        newShare = Integer.parseInt(share);
-
-        String average = newAverage.getText().toString();
-        //marketPrice = Integer.getInteger(average);
-        marketPrice = Integer.parseInt(average);
-
-        price = newShare * marketPrice;
-
-        String total = String.valueOf(price);
-        newAmount.setText(total);
-
-        return price;
-    }
-
-    public int calculateHolding(EditText currentHoldingShares, EditText currentHoldingAverage) {
-        int holdingAverage, holdingShares, holdingAmount;
-
-        String average = currentHoldingAverage.getText().toString();
-        //holdingAverage = Integer.getInteger(average); this is not working showing null pointer
-
-        holdingAverage = Integer.parseInt(average);
         String shares = currentHoldingShares.getText().toString();
         //holdingShares = Integer.getInteger(shares); same as above
 
@@ -109,16 +89,78 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(this, "value" + holdingAmount, Toast.LENGTH_LONG).show();
         //currentHoldingAmount.setText(holdingAmount);
 
-        String value = String.valueOf(holdingAmount);
+        String value = String.valueOf(holdingAmount); // convert int to string to assign it to edit text
         currentHoldingAmount.setText(value);
 
-        return holdingAmount;
-    }
+        // calculate new
+        String share = newHoldingShares.getText().toString();
+        // newShare = Integer.getInteger(share);
+        newSh = Integer.parseInt(share);
+        String marketAverage = newHoldingAverage.getText().toString();
+        //marketPrice = Integer.getInteger(average);
+        marketPrice = Integer.parseInt(marketAverage);
+        price = newSh * marketPrice;
+        String total = String.valueOf(price);
+        newHoldingAmount.setText(total);
 
-    public void calculateHolding(View view) {
-        calculateHolding(currentHoldingShares, currentHoldingAverage);
-        calculateNew(newShares, newAverage);
-        calculateTotal();
+        // calculate total
+        String holding = currentHoldingShares.getText().toString();
+        oldHold = Integer.parseInt(holding);
+        String newShare = newHoldingShares.getText().toString();
+        newHold = Integer.parseInt(newShare);
+        String avg = currentHoldingAverage.getText().toString();
+        oldAvg = Integer.parseInt(avg);
+        String NewAverage = newHoldingAverage.getText().toString();
+        newAvg = Integer.parseInt(NewAverage);
 
+        oldTot = oldAvg * oldHold;
+        newTot = newAvg * newHold;
+        totalSh = newHold + oldHold;
+        totalAv = newAvg + oldAvg;
+        totalAm = oldTot + newTot;
+
+        String totalShares = String.valueOf(totalSh);
+        String totalAverage = String.valueOf(totalAv);
+        String totalAmount = String.valueOf(totalAm);
+        totalSharesNow.setText(totalShares);
+        totalAmountNow.setText(totalAmount);
+        totalAverageNow.setText(totalAverage);
     }
 }
+
+ */
+/*
+        String share = totalShares.getText().toString();
+        totalSh = Integer.parseInt(share);
+        String average = totalAverage.getText().toString();
+        totalAv = Integer.parseInt(average);
+
+    public int calculateNew(EditText newShares, EditText newAverage) {
+        int newShare, marketPrice,  price;
+        String share = newShares.getText().toString();
+        // newShare = Integer.getInteger(share);
+        newShare = Integer.parseInt(share);
+        String average = newAverage.getText().toString();
+        //marketPrice = Integer.getInteger(average);
+        marketPrice = Integer.parseInt(average);
+        price = newShare * marketPrice;
+        String total = String.valueOf(price);
+        newAmount.setText(total);
+        return price;
+    }
+    public int calculateHolding(EditText currentHoldingShares, EditText currentHoldingAverage) {
+        int holdingAverage, holdingShares, holdingAmount;
+        String average = currentHoldingAverage.getText().toString();
+        //holdingAverage = Integer.getInteger(average); this is not working showing null pointer
+        holdingAverage = Integer.parseInt(average);
+        String shares = currentHoldingShares.getText().toString();
+        //holdingShares = Integer.getInteger(shares); same as above
+        holdingShares = Integer.parseInt(shares);
+        holdingAmount = holdingAverage * holdingShares;
+        //Toast.makeText(this, "value" + holdingAmount, Toast.LENGTH_LONG).show();
+        //currentHoldingAmount.setText(holdingAmount);
+        String value = String.valueOf(holdingAmount);
+        currentHoldingAmount.setText(value);
+        return holdingAmount;
+    }
+*/
