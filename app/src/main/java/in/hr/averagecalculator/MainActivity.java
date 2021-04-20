@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             newAvg = marketPrice;
 
         totalSh = holdingShares + newSh;
-        totalAv = holdingAverage + marketPrice;
+        totalAv = (holdingAverage + marketPrice)/2;
         totalAm = holdingAmount + newTot;
 /*
             totalSh = oldHold + newHold;
