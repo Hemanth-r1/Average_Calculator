@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     EditText currentHoldingShares, currentHoldingAverage, currentHoldingAmount,
@@ -38,35 +41,55 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculateHolding(View view) {
 
-        holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
-        holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
-        holdingAmount = holdingAverage * holdingShares;
-        String holdingValue = String.valueOf(holdingAmount);
-        currentHoldingAmount.setText(holdingValue);
+        if (currentHoldingShares.getText().toString().equals("")){
+            Snackbar.make(view, "Enter Some Value in the boxes", Snackbar.LENGTH_LONG).show();
+            currentHoldingShares.setText("0");
+        }
+        if (newHoldingAverage.getText().toString().equals("")){
+            Snackbar.make(view, "Enter new no of shares and avg", Snackbar.LENGTH_LONG).show();
+            newHoldingAverage.setText("0");
+        }
+        if (currentHoldingAverage.getText().toString().equals("")){
+            Snackbar.make(view, "Enter Some Value in the boxes", Snackbar.LENGTH_LONG).show();
+            currentHoldingAverage.setText("0");
+        }
+        if ( newHoldingShares.getText().toString().equals("")){
+            Snackbar.make(view, "Enter new no of shares and avg", Snackbar.LENGTH_LONG).show();
+            newHoldingShares.setText("0");
+        }
 
-        newSh = Integer.parseInt(newHoldingShares.getText().toString());
-        marketPrice = Integer.parseInt(newHoldingAverage.getText().toString());
-        newTot = marketPrice * newSh;
-        String newValue = String.valueOf(newTot);
-        newHoldingAmount.setText(newValue);
+            holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
+            holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
+            holdingAmount = holdingAverage * holdingShares;
+            String holdingValue = String.valueOf(holdingAmount);
+            currentHoldingAmount.setText(holdingValue);
 
-        oldHold = holdingShares;
-        newHold = newSh;
-        oldAvg = holdingAverage;
-        newAvg = marketPrice;
+            newSh = Integer.parseInt(newHoldingShares.getText().toString());
+            marketPrice = Integer.parseInt(newHoldingAverage.getText().toString());
+            newTot = marketPrice * newSh;
+            String newValue = String.valueOf(newTot);
+            newHoldingAmount.setText(newValue);
 
-        totalSh = oldHold + newHold;
-        totalAv = oldAvg + newAvg;
+            oldHold = holdingShares;
+            newHold = newSh;
+            oldAvg = holdingAverage;
+            newAvg = marketPrice;
+
+        totalSh = holdingShares + newSh;
+        totalAv = holdingAverage + marketPrice;
         totalAm = holdingAmount + newTot;
+/*
+            totalSh = oldHold + newHold;
+            totalAv = oldAvg + newAvg;
+            totalAm = holdingAmount + newTot;
+ */
+            String totalShares = String.valueOf(totalSh);
+            String totalAvg = String.valueOf(totalAv);
+            String totalAmount = String.valueOf(totalAm);
 
-        String totalShares = String.valueOf(totalSh);
-        String totalAvg = String.valueOf(totalAv);
-        String totalAmount = String.valueOf(totalAm);
-
-        totalSharesNow.setText(totalShares);
-        totalAverageNow.setText(totalAvg);
-        totalAmountNow.setText(totalAmount);
-
+            totalSharesNow.setText(totalShares);
+            totalAverageNow.setText(totalAvg);
+            totalAmountNow.setText(totalAmount);
         //calculateTotal();
         // calculateHolding(currentHoldingShares, currentHoldingAverage);
         // calculateNew(newShares, newAverage);
