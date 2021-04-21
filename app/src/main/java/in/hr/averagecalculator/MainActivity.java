@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     EditText currentHoldingShares, currentHoldingAverage, currentHoldingAmount,
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calculateHolding(View view) {
-
+        /*
         if (currentHoldingShares.getText().toString().equals("")){
             Snackbar.make(view, "Enter Some Value in the boxes", Snackbar.LENGTH_LONG).show();
             currentHoldingShares.setText("0");
@@ -56,8 +53,62 @@ public class MainActivity extends AppCompatActivity {
         if ( newHoldingShares.getText().toString().equals("")){
             Snackbar.make(view, "Enter new no of shares and avg", Snackbar.LENGTH_LONG).show();
             newHoldingShares.setText("0");
+        } */
+
+        // to calculate average if  shares and amount are given
+        if (currentHoldingAverage.getText().toString().equals("") && !currentHoldingShares.getText().toString().equals("") && !currentHoldingAmount.getText().toString().equals("")){
+            holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
+            holdingAmount = Integer.parseInt(currentHoldingAmount.getText().toString());
+            holdingAverage = holdingAmount / holdingShares;
+            String holdingAmountText = String.valueOf(holdingAverage);
+            currentHoldingAverage.setText(holdingAmountText);
         }
 
+        // calculate shares if average and amount are given
+        if (!currentHoldingAverage.getText().toString().equals("") && currentHoldingShares.getText().toString().equals("") && !currentHoldingAmount.getText().toString().equals("")){
+            holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
+            holdingAmount = Integer.parseInt(currentHoldingAmount.getText().toString());
+            holdingShares = holdingAmount/holdingAverage;
+            String holdingSharesText = String.valueOf(holdingShares);
+            currentHoldingAverage.setText(holdingSharesText);
+        }
+
+        // calculate amount if shares and average are given
+        if (!currentHoldingAverage.getText().toString().equals("") && !currentHoldingShares.getText().toString().equals("") && currentHoldingAmount.getText().toString().equals("")){
+            holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
+            holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
+            holdingAmount = holdingAverage * holdingShares;
+            String holdingValue = String.valueOf(holdingAmount);
+            currentHoldingAmount.setText(holdingValue);
+        }
+
+        // calculate average if new shares and amount are given
+        if (newHoldingAverage.getText().toString().equals("")&& !newHoldingShares.getText().toString().equals("") && !newHoldingAmount.getText().toString().equals("")){
+            newSh = Integer.parseInt(newHoldingShares.getText().toString());
+            newTot = Integer.parseInt(newHoldingAmount.getText().toString());
+            marketPrice = newTot / newSh;
+            String price = String.valueOf(marketPrice);
+            newHoldingAverage.setText(price);
+        }
+
+        // calculate new shares if average and amount are given
+        if (!newHoldingAverage.getText().toString().equals("")&& newHoldingShares.getText().toString().equals("") && !newHoldingAmount.getText().toString().equals("")){
+            newAvg = Integer.parseInt(newHoldingAverage.getText().toString());
+            newTot = Integer.parseInt(newHoldingAmount.getText().toString());
+            newSh = newTot / newAvg;
+            String share = String.valueOf(marketPrice);
+            newHoldingAverage.setText(share);
+        }
+
+        // calculate amount if average and shares are given
+        if (!newHoldingAverage.getText().toString().equals("")&& !newHoldingShares.getText().toString().equals("") && newHoldingAmount.getText().toString().equals("")){
+            newSh = Integer.parseInt(newHoldingShares.getText().toString());
+            marketPrice = Integer.parseInt(newHoldingAverage.getText().toString());
+            newTot = marketPrice * newSh;
+            String newValue = String.valueOf(newTot);
+            newHoldingAmount.setText(newValue);
+        }
+        /*
             holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
             holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
             holdingAmount = holdingAverage * holdingShares;
@@ -74,9 +125,15 @@ public class MainActivity extends AppCompatActivity {
             newHold = newSh;
             oldAvg = holdingAverage;
             newAvg = marketPrice;
+         */
 
         totalSh = holdingShares + newSh;
-        totalAv = (holdingAverage + marketPrice)/2;
+        if (holdingAverage != 0 && marketPrice != 0) {
+            totalAv = (holdingAverage + marketPrice) / 2;
+        }else if (holdingAverage != 0){
+            totalAv = holdingAverage;
+        }else
+        {totalAv = marketPrice;}
         totalAm = holdingAmount + newTot;
 /*
             totalSh = oldHold + newHold;
@@ -90,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
             totalSharesNow.setText(totalShares);
             totalAverageNow.setText(totalAvg);
             totalAmountNow.setText(totalAmount);
+
         //calculateTotal();
         // calculateHolding(currentHoldingShares, currentHoldingAverage);
         // calculateNew(newShares, newAverage);
