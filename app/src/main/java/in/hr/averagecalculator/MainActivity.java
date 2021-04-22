@@ -15,9 +15,10 @@ public class MainActivity extends AppCompatActivity {
     TextView totalSharesNow, totalAverageNow, totalAmountNow;
 
     float holdingAverage, holdingShares, holdingAmount;
-    float newSh, marketPrice, price;
+    float newSh;
+    float marketPrice;
     float totalSh, totalAv, totalAm;
-    float oldHold, newHold, newAvg, oldAvg, newTot, oldTot;
+    float newAvg, newTot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,89 @@ public class MainActivity extends AppCompatActivity {
         totalAmountNow = findViewById(R.id.total_amount);
         totalAverageNow = findViewById(R.id.total_average_price);
         totalSharesNow = findViewById(R.id.total_shares);
-
     }
 
+    public void calculate(View view) {
+
+        String currentHoldSh, currentHoldAvg, currentHoldAmt, newHoldSh, newHoldAvg, newHoldAmt;
+
+        Snackbar.make(view, "NING OND 20 KODTHINI", Snackbar.LENGTH_LONG).show();
+        currentHoldAvg = currentHoldingAverage.getText().toString();
+        currentHoldSh = currentHoldingShares.getText().toString();
+        currentHoldAmt = currentHoldingAmount.getText().toString();
+        newHoldSh = newHoldingShares.getText().toString();
+        newHoldAvg = newHoldingAverage.getText().toString();
+        newHoldAmt = newHoldingAmount.getText().toString();
+
+        // to calculate average if  shares and amount are given
+        if (currentHoldAvg.equals("") && !currentHoldSh.equals("") && !currentHoldAmt.equals("")) {
+            holdingShares = Float.parseFloat(currentHoldSh);
+            holdingAmount = Float.parseFloat(currentHoldAmt);
+            holdingAverage = holdingAmount / holdingShares;
+            String holdingAmountText = String.valueOf(holdingAverage);
+            currentHoldingAverage.setText(holdingAmountText);
+        }
+        // calculate shares if average and amount are given
+        if (!currentHoldAvg.equals("") && currentHoldSh.equals("") && !currentHoldAmt.equals("")) {
+            holdingAverage = Float.parseFloat(currentHoldingAverage.getText().toString());
+            holdingAmount = Float.parseFloat(currentHoldingAmount.getText().toString());
+            holdingShares = holdingAmount / holdingAverage;
+            String holdingSharesText = String.valueOf(holdingShares);
+            currentHoldingShares.setText(holdingSharesText);
+        }
+        // calculate amount if shares and average are given
+        if (!currentHoldAvg.equals("") && !currentHoldSh.equals("") && currentHoldAmt.equals("")) {
+            holdingShares = Float.parseFloat(currentHoldingShares.getText().toString());
+            holdingAverage = Float.parseFloat(currentHoldingAverage.getText().toString());
+            holdingAmount = holdingAverage * holdingShares;
+            String holdingValue = String.valueOf(holdingAmount);
+            currentHoldingAmount.setText(holdingValue);
+        }
+
+        // calculate new shares if average and amount are given
+        if (!newHoldAvg.equals("") && newHoldSh.equals("") && !newHoldAmt.equals("")) {
+            newAvg = Float.parseFloat(newHoldingAverage.getText().toString());
+            newTot = Float.parseFloat(newHoldingAmount.getText().toString());
+            newSh = newTot / newAvg;
+            String share = String.valueOf(newSh);
+            newHoldingShares.setText(share);
+        }
+        // calculate amount if average and shares are given
+        if (!newHoldAvg.equals("") && !newHoldSh.equals("") && newHoldAmt.equals("")) {
+            newSh = Float.parseFloat(newHoldingShares.getText().toString());
+            marketPrice = Float.parseFloat(newHoldingAverage.getText().toString());
+            newTot = marketPrice * newSh;
+            String newValue = String.valueOf(newTot);
+            newHoldingAmount.setText(newValue);
+        }
+        // calculate avg if share and amount are given
+        if (newHoldAvg.equals("") && !newHoldSh.equals("") && !newHoldAmt.equals("")) {
+            newSh = Float.parseFloat(newHoldingShares.getText().toString());
+            float value = Float.parseFloat(newHoldingAmount.getText().toString());
+            marketPrice = value / newSh;
+            String price = String.valueOf(marketPrice);
+            newHoldingAmount.setText(price);
+        }
+        totalSh = holdingShares + newSh;
+        totalAm = holdingAmount + newTot;
+        if (holdingAverage != 0 && marketPrice != 0) {
+            totalAv = (totalAm) / totalSh;
+        } else if (holdingAverage != 0) {
+            totalAv = holdingAverage;
+        } else {
+            totalAv = marketPrice;
+        }
+
+        String totalShares = String.valueOf(totalSh);
+        String totalAvg = String.valueOf(totalAv);
+        String totalAmount = String.valueOf(totalAm);
+
+        totalSharesNow.setText(totalShares);
+        totalAverageNow.setText(totalAvg);
+        totalAmountNow.setText(totalAmount);
+    }
+}
+/*
     public void calculateHolding(View view) {
         /*
         if (currentHoldingShares.getText().toString().equals("")){
@@ -55,12 +136,12 @@ public class MainActivity extends AppCompatActivity {
         if ( newHoldingShares.getText().toString().equals("")){
             Snackbar.make(view, "Enter new no of shares and avg", Snackbar.LENGTH_LONG).show();
             newHoldingShares.setText("0");
-        } */
+        }
 
         Snackbar.make(view, "NING OND 20 KODTHINI", Snackbar.LENGTH_LONG).show();
 
         // to calculate average if  shares and amount are given
-        if (currentHoldingAverage.getText().toString().equals("") && !currentHoldingShares.getText().toString().equals("") && !currentHoldingAmount.getText().toString().equals("")){
+        if (currentHoldingAverage.getText().toString().equals("") && !currentHoldingShares.getText().toString().equals("") && !currentHoldingAmount.getText().toString().equals("")) {
 
             //holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
             //works only for int variables i need it to work for floating variable
@@ -73,19 +154,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // calculate shares if average and amount are given
-        if (!currentHoldingAverage.getText().toString().equals("") && currentHoldingShares.getText().toString().equals("") && !currentHoldingAmount.getText().toString().equals("")){
+        if (!currentHoldingAverage.getText().toString().equals("") && currentHoldingShares.getText().toString().equals("") && !currentHoldingAmount.getText().toString().equals("")) {
             //holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
             //holdingAmount = Integer.parseInt(currentHoldingAmount.getText().toString());
             holdingAverage = Float.parseFloat(currentHoldingAverage.getText().toString());
             holdingAmount = Float.parseFloat(currentHoldingAmount.getText().toString());
-            holdingShares = holdingAmount/holdingAverage;
+            holdingShares = holdingAmount / holdingAverage;
             String holdingSharesText = String.valueOf(holdingShares);
             currentHoldingAverage.setText(holdingSharesText);
         }
 
         // calculate amount if shares and average are given
-        if (!currentHoldingAverage.getText().toString().equals("") && !currentHoldingShares.getText().toString().equals("") && currentHoldingAmount.getText().toString().equals("")){
-
+        if (!currentHoldingAverage.getText().toString().equals("") && !currentHoldingShares.getText().toString().equals("") && currentHoldingAmount.getText().toString().equals("")) {
             //holdingAverage = Integer.parseInt(currentHoldingAverage.getText().toString());
             //holdingShares = Integer.parseInt(currentHoldingShares.getText().toString());
             holdingShares = Float.parseFloat(currentHoldingShares.getText().toString());
@@ -96,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // calculate average if new shares and amount are given
-        if (newHoldingAverage.getText().toString().equals("")&& !newHoldingShares.getText().toString().equals("") && !newHoldingAmount.getText().toString().equals("")){
+        if (newHoldingAverage.getText().toString().equals("") && !newHoldingShares.getText().toString().equals("") && !newHoldingAmount.getText().toString().equals("")) {
             //newSh = Integer.parseInt(newHoldingShares.getText().toString());
             //newTot = Integer.parseInt(newHoldingAmount.getText().toString());
             newSh = Float.parseFloat(newHoldingShares.getText().toString());
@@ -107,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // calculate new shares if average and amount are given
-        if (!newHoldingAverage.getText().toString().equals("")&& newHoldingShares.getText().toString().equals("") && !newHoldingAmount.getText().toString().equals("")){
+        if (!newHoldingAverage.getText().toString().equals("") && newHoldingShares.getText().toString().equals("") && !newHoldingAmount.getText().toString().equals("")) {
             //newAvg = Integer.parseInt(newHoldingAverage.getText().toString());
             //newTot = Integer.parseInt(newHoldingAmount.getText().toString());
             newAvg = Float.parseFloat(newHoldingAverage.getText().toString());
@@ -118,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // calculate amount if average and shares are given
-        if (!newHoldingAverage.getText().toString().equals("")&& !newHoldingShares.getText().toString().equals("") && newHoldingAmount.getText().toString().equals("")){
+        if (!newHoldingAverage.getText().toString().equals("") && !newHoldingShares.getText().toString().equals("") && newHoldingAmount.getText().toString().equals("")) {
             //newSh = Integer.parseInt(newHoldingShares.getText().toString());
             //marketPrice = Integer.parseInt(newHoldingAverage.getText().toString());
             newSh = Float.parseFloat(newHoldingShares.getText().toString());
@@ -144,34 +224,49 @@ public class MainActivity extends AppCompatActivity {
             newHold = newSh;
             oldAvg = holdingAverage;
             newAvg = marketPrice;
-         */
+
 
         totalSh = holdingShares + newSh;
         if (holdingAverage != 0 && marketPrice != 0) {
             totalAv = (holdingAverage + marketPrice) / 2;
-        }else if (holdingAverage != 0){
+        } else if (holdingAverage != 0) {
             totalAv = holdingAverage;
-        }else
-        {totalAv = marketPrice;}
+        } else {
+            totalAv = marketPrice;
+        }
         totalAm = holdingAmount + newTot;
 /*
             totalSh = oldHold + newHold;
             totalAv = oldAvg + newAvg;
             totalAm = holdingAmount + newTot;
- */
-            String totalShares = String.valueOf(totalSh);
-            String totalAvg = String.valueOf(totalAv);
-            String totalAmount = String.valueOf(totalAm);
 
-            totalSharesNow.setText(totalShares);
-            totalAverageNow.setText(totalAvg);
-            totalAmountNow.setText(totalAmount);
+        String totalShares = String.valueOf(totalSh);
+        String totalAvg = String.valueOf(totalAv);
+        String totalAmount = String.valueOf(totalAm);
+
+        totalSharesNow.setText(totalShares);
+        totalAverageNow.setText(totalAvg);
+        totalAmountNow.setText(totalAmount);
 
         //calculateTotal();
         // calculateHolding(currentHoldingShares, currentHoldingAverage);
         // calculateNew(newShares, newAverage);
     }
+
+    public void clearAll(View view) {
+        totalSharesNow.setText("");
+        totalAverageNow.setText("");
+        totalAmountNow.setText("");
+        newHoldingAmount.setText("");
+        newHoldingShares.setText("");
+        newHoldingAverage.setText("");
+        currentHoldingAverage.setText("");
+        currentHoldingShares.setText("");
+        currentHoldingAmount.setText("");
+    }
 }
+
+ */
 /*
     public void calculateTotal() {
 
