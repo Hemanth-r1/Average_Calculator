@@ -3,6 +3,7 @@ package in.hr.averagecalculator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,29 @@ public class MainActivity extends AppCompatActivity {
         currentHoldingAverage.setText("");
         currentHoldingShares.setText("");
         currentHoldingAmount.setText("");
+        holdingAverage =0 ;
+        holdingShares =0;
+        holdingAmount = 0;newSh = 0;
+        marketPrice = 0;
+        totalSh = 0;
+        totalAv = 0;
+        totalAm = 0;
+        newAvg = 0;
+        newTot =0;
+    }
+
+    public void MemoryAdd(View view) {
+       // variables used holdingAverage, holdingAmount, holdingShares, newSh, newAvg, newTot
+
+        currentHoldingShares.setText(String.valueOf(totalSh));
+        currentHoldingAmount.setText(String.valueOf(totalAm));
+        currentHoldingAverage.setText(String.valueOf(totalAv));
+        totalSharesNow.setText("");
+        totalAverageNow.setText("");
+        totalAmountNow.setText("");
+        newHoldingAmount.setText("");
+        newHoldingShares.setText("");
+        newHoldingAverage.setText("");
         holdingAverage =0 ;
         holdingShares =0;
         holdingAmount = 0;newSh = 0;
@@ -157,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
         totalAverageNow.setText(totalAvg);
         totalAmountNow.setText(totalAmount);
     }
-
-
 }
 /*
     public void calculateHolding(View view) {
