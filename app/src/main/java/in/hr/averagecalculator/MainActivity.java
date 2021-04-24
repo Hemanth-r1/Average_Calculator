@@ -48,7 +48,15 @@ public class MainActivity extends AppCompatActivity {
         currentHoldingAverage.setText("");
         currentHoldingShares.setText("");
         currentHoldingAmount.setText("");
-        finish();
+        holdingAverage =0 ;
+        holdingShares =0;
+        holdingAmount = 0;newSh = 0;
+        marketPrice = 0;
+        totalSh = 0;
+        totalAv = 0;
+        totalAm = 0;
+        newAvg = 0;
+        newTot =0;
     }
 
     public void calculate(View view) {
