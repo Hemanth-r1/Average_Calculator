@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="14dp"
+    android:layout_margin="10dp"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -17,6 +17,7 @@
             android:id="@+id/holding_shares"
             android:layout_width="wrap_content"
             android:hint="No of Shares"
+            android:ems="6"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />
 
@@ -25,6 +26,7 @@
             android:id="@+id/holding_shares_average"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:inputType="numberDecimal"
             android:hint="Current Average" />
 
@@ -32,6 +34,7 @@
             android:id="@+id/holding_shares_average_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:inputType="numberDecimal"
             android:hint="Total Hold Amt" />
     </LinearLayout>
@@ -46,6 +49,7 @@
             android:id="@+id/new_shares"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:inputType="numberDecimal"
             android:hint="New Shares" />
 
@@ -54,17 +58,17 @@
             android:id="@+id/new_shares_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="6"
             android:inputType="numberDecimal"
-            android:layout_marginStart="10dp"
             android:hint="Market Price" />
 
         <EditText
             android:id="@+id/new_shares_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
+            android:ems="6"
             android:hint="Total New Amt"
-             />
+            android:inputType="numberDecimal" />
 
     </LinearLayout>
 
@@ -79,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18sp"
-            android:layout_margin="6dp"
+            android:ems="6"
             android:hint="Total Shares"/>
 
 
@@ -88,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18sp"
-            android:layout_margin="6dp"
+            android:ems="6"
             android:hint="Average Price"/>
 
         <TextView
@@ -96,9 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="18sp"
-            android:layout_margin="6dp"
+            android:ems="6"
             android:hint="Total Amount"/>
-
 
     </LinearLayout>
 
